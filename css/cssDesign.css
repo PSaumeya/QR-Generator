@@ -1,0 +1,111 @@
+
+#localHeaderCss
+    {text-align: center;
+        
+        border: 1px solid;
+        padding: 10px;
+        box-shadow: inset 2px 2px 15px 20px #0f3dd4!important;
+        font-weight: 900;
+        color: cornsilk;
+    }
+body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .row .col.s12 {
+      width: 97%;
+      margin-left: 1%;
+      left: auto;
+      right: auto;
+  }
+
+
+    /* Add styles to the form container */
+#qrcodeBox
+    {
+      display: flex;
+      justify-content: center;
+    }
+.form-container {
+      padding: 10px;
+      background-color: white;
+  }
+  
+  /* Full-width input fields */
+  .form-container input, .form-container input[type=password] 
+  {
+   padding: 15px;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #e2d3d3;
+  }
+ 
+  
+#selectDiv
+  {
+  width: 100%;
+}
+  /* When the inputs get focus, do something */
+  .form-container input:focus, .form-container input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;
+  }
+  
+  /* Set a style for the submit/login button */
+  button {
+    width: 100%;
+    
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 10px;
+    opacity: 0.8;
+    border: 1px solid #012880!important;
+    background-image: linear-gradient(-180deg, #90b3de 0%, #1231c7 100%)!important;
+    box-shadow: 0 1rem 1.25rem 0 rgba(22,75,195,0.50), 0 -0.25rem 1.5rem rgba(110, 15, 155, 1) inset, 0 0.75rem 0.5rem rgba(255,255,255, 0.4) inset, 0 0.25rem 0.5rem 0 rgb(178 29 214) inset!important;
+    border-radius: 10px!important;
+  }
+  a {
+    width: 100%;
+    text-align: center;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 10px;
+    opacity: 0.8;
+    border: 1px solid #012880!important;
+    background-image: linear-gradient(-180deg, #90b3de 0%, #1231c7 100%)!important;
+    box-shadow: 0 1rem 1.25rem 0 rgba(22,75,195,0.50), 0 -0.25rem 1.5rem rgba(110, 15, 155, 1) inset, 0 0.75rem 0.5rem rgba(255,255,255, 0.4) inset, 0 0.25rem 0.5rem 0 rgb(178 29 214) inset!important;
+    border-radius: 10px!important;
+  }
+ #SaveLink
+  {
+    margin-top: 2%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .invalid
+  {
+    color: red;
+    background-color: bisque!important;
+  }
+  
+
+  .toast.rounded
+  {
+    margin-bottom: 5%;
+    background-color: #0f3dd4;
+    color: white;
+    padding: 16px 20px;
+  }
+
+  .hide
+  {
+    display:none;
+  }
+  .show
+  {
+    display: block;
+  }

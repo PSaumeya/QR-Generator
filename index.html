@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+<!--Import Google Icon Font-->
+    <link rel="stylesheet" href="css/materialIcons.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="css/cssDesign.css" type="text/css" media="all" />
+<body>
+        <!-- Compiled and minified JavaScript -->
+        <script src="materializeJS/materialize.min.js"></script>
+
+         <div class="row">
+            <div class="col s12">
+                <header id="localHeaderCss">Generate QRCode</header>
+            </div>
+            <div class="col s12">
+                <form id="dataForm" >
+                    <div class="row">
+                        <form class="col s12">
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <i class="material-icons prefix">account_circle</i>
+                                    <input id="fullname" name="fullname" type="text" class="validate">
+                                    <label for="fullname">Name*</label>
+                                </div>
+                                 <div class="input-field col s6">
+                                    <i class="material-icons prefix">phone</i>
+                                    <input type="number" id="mobileNo" name="mobileNo" class="validate" data-length="10">
+                                    <label for="mobileNo">Mobile number*</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <i class="material-icons prefix">email</i>
+                                    <input id="email" type="email" name="email" class="validate">
+                                    <label for="email">Email*</label>
+                                    <span class="helper-text" data-error="wrong" data-success="right">Helper text</span>
+                                </div>
+                                <div class="input-field col s6">
+                                    <i class="material-icons prefix">accessibility</i>
+                                    <label for="designation">Designation</label>
+                                    <input type="text" id="designation" name="designation" >
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s1">
+                                    <label>DOB*</label>
+                                </div>
+                                <div class="input-field col s5">
+                                    <input type="date" id="dob" name="dob" onchange="changeDOB()">
+                                </div>
+                                <div class="input-field col s6">
+                                    <i class="material-icons prefix">account_box</i>
+                                    <input id="empid" type="text" class="validate" data-length="15">
+                                    <label for="empid">Emp Id</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <textarea id="address" class="materialize-textarea" data-length="50"></textarea>
+                                    <label for="address">Address</label>
+                                </div>
+                                <div class="input-field col s6">
+                                    <div class="input-field col s3">
+                                        <i class="material-icons prefix">assignment_ind</i>
+                                        <label>Relation</label>
+                                    </div>
+                                    
+                                    <div id="selectDiv" class="input-field col s3">
+                                       
+                                    <select>
+                                        <option value="Self" selected>Self</option>
+                                        <option value="Spouse">Spouse</option>
+                                        <option value="Child">Child</option>
+                                        <option value="Father">Father</option>
+                                        <option value="Mother">Mother</option>
+                                        <option value="Other">Other</option>
+                                      </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </form>
+            </div>
+            <div class=" col s12">
+               <button id="generateQRID" onclick="generateQR()">GENERATE</button>
+            </div>
+            <div id="qrcodeBox" class=" col s12" >
+                <div id="qrcode"">
+                   
+                </div>
+                
+            </div> 
+           
+                <div id="SaveLink" class="hide col s12">
+                    <button id="saveMe" class="buttonTest">SaveQR</button>
+                 </div>   
+        </div>   
+     <!--  <img class="imgTest" src="image/faceImg.png">
+     <button id="saveTest" class="buttonTest" onclick="saveMe()">save</button>
+     
+         <button id="shareSocial" class="butshareSocialTest" onclick="socialSharing()">share</button> 
+         -->
+</body>
+<script src="jqueryJS/jquery-3.3.1.min.js"></script>
+<script src="materializeJS/materialize.min.js"></script>
+      <script src="qrCodeResourceJS/qrcode.min.js"></script>
+      <script src="jqueryJS/FileSaver.min.js"></script>
+      <script src="js/script.js"></script>
+      <!--   social sharing 
+<script>
+var options = {
+  message: 'Share this QRCode', // not supported on some apps (Facebook, Instagram)
+  files: ['', ''], // an array of filenames either locally or remotely
+  url: 'https://www.npmjs.com/package/cordova-plugin-x-socialsharing',
+  chooserTitle: 'Share to social' // Android only, you can override the default share sheet title
+ };
+ function socialSharing()
+ {
+    window.plugins.socialsharing.shareWithOptions(options);
+ }
+ 
+</script>
+-->
+
+
+
+      <script>
+
+          //character Count validation
+           $(document).ready(function() {
+              $('input#mobileNo, textarea#address, input#empid').characterCounter();
+            });
+            $(document).ready(function(){
+                $('select').formSelect();
+                });
+
+            //Date validation
+                        function todayDate() {
+                var today = new Date(); // get the current date
+                var dd = today.getDate(); //get the day from today.
+                var mm = today.getMonth()+1; //get the month from today +1 because january is 0!
+                var yyyy = today.getFullYear(); //get the year from today
+
+                //if day is below 10, add a zero before (ex: 9 -> 09)
+                if(dd<10) {
+                    dd='0'+dd
+                }
+
+                //like the day, do the same to month (3->03)
+                if(mm<10) {
+                    mm='0'+mm
+                }
+
+                //finally join yyyy mm and dd with a "-" between then
+                return yyyy+'-'+mm+'-'+dd;
+            }
+            $(document).ready(function(){
+                $('#dob').attr('max', todayDate());
+            });
+               
+                function changeDOB()
+                {
+                    document.getElementById('dob').classList.remove('invalid');
+                }
+
+
+           var qrdata=document.getElementById("dataForm");
+           var qrcode=new QRCode(document.getElementById("qrcode"),{ });
+           function generateQR()
+           {
+           // var fName=document.getElementById("fullname");
+          
+          var fName = document.forms["dataForm"]["fullname"].value;
+          var mobNo = document.forms["dataForm"]["mobileNo"].value;
+          var emailId = document.forms["dataForm"]["email"].value;
+          var dob = document.forms["dataForm"]["dob"].value;
+          var empId= document.forms["dataForm"]["empid"].value;
+         
+            if (fName == "" &&  mobNo == "" &&  emailId == "" &&  dob == "") {
+                // alert("Name,Mobile no,Email ID and date of birth must be filled out");
+                document.getElementById('fullname').classList.add('invalid');
+                document.getElementById('mobileNo').classList.add('invalid');
+                document.getElementById('email').classList.add('invalid');
+               
+                document.getElementById('dob').classList.add('invalid');
+                 M.toast({html: 'Name,Mobile no,Email ID and date of birth must be filled out!', classes: 'rounded', inDuration: '9000'});
+                 return false;
+             }
+            
+                        
+           else if (fName != "" &&  mobNo == "" &&  emailId == "" &&  dob == "") {
+                 M.toast({html: 'Mobile no,Email ID and date of birth must be filled!', classes: 'rounded', inDuration: '9000'});
+                 return false;
+             }
+            else if (fName == "" &&  mobNo != "" &&  emailId == "" &&  dob == "") {
+                 alert("Name,Email ID and date of birth must be filled out");
+                 M.toast({html: 'Name,Mobile no,Email ID and date of birth must be filled out!', classes: 'rounded', inDuration: '9000'});
+                 return false;
+             }
+             else if (fName == "" &&  mobNo == "" &&  emailId != "" &&  dob == "") {
+                 M.toast({html: 'Name,Mobile no and date of birth must be filled!', classes: 'rounded', inDuration: '9000'});
+                 return false;
+             }
+             else if (fName != "" &&  mobNo != "" &&  emailId == "" &&  dob == "") {
+                M.toast({html: 'Email ID and date of birth must be filled!', classes: 'rounded', inDuration: '9000'});
+                 return false;
+             }
+             else if (fName == "" &&  mobNo != "" &&  emailId != "" &&  dob == "") {
+                
+                 M.toast({html: 'Name and date of birth must be filled!', classes: 'rounded', inDuration: '9000'});
+                 return false;
+             }
+             else if (fName == "" &&  mobNo == "" &&  emailId != "" &&  dob != "") {
+                
+                 M.toast({html: 'Name and Mobile no must be filled!', classes: 'rounded', inDuration: '9000'});
+                 return false;
+             }
+             else if (fName != "" &&  mobNo == "" &&  emailId == "" &&  dob != "") {
+                
+                 M.toast({html: 'Email ID and Mobile no must be filled!', classes: 'rounded', inDuration: '9000'});
+                 return false;
+             }
+            else if (fName == "") {
+                 M.toast({html: 'Name must be filled!', classes: 'rounded', inDuration: '9000'});
+                 return false;
+             }
+            
+             else if (mobNo == "" || mobNo.length != 10) {
+                document.getElementById('mobileNo').classList.add('invalid');
+                 M.toast({html: 'Please provide 10 digit mobile No.!', classes: 'rounded', inDuration: '9000'});
+                 return false;
+             }
+             else if (emailId == "") {
+                 
+                 M.toast({html: 'EmailID must be filled!', classes: 'rounded', inDuration: '9000'});
+                 return false;
+             }
+              else if (dob == "") {
+                
+                 M.toast({html: 'Please Fill DOB!', classes: 'rounded', inDuration: '9000'});
+                 return false;
+             }
+             else if (empId.length >= 15) {
+                document.getElementById('empid').classList.add('invalid');
+                M.toast({html: 'Emp Id should be less than 15!', classes: 'rounded', inDuration: '9000'});
+                return false;
+            }
+            
+           else if (!/^[a-zA-Z ]*$/g.test(fName)) {
+                        document.getElementById('fullname').classList.add('invalid');
+                    M.toast({html: 'Name should only contain Alphabets.!', classes: 'rounded', inDuration: '9000'});
+                
+                    return false;
+                }
+
+                 else if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(emailId))
+                 {
+                   
+                    M.toast({html: 'You have entered an invalid email address!', classes: 'rounded', inDuration: '9000'});
+             return (false);
+                        }
+                        
+                       
+   
+             
+             //validation done Now Generating QRCode
+            var x = document.getElementById("dataForm");
+            var text = "";
+            var label=" ";
+           
+            var i;
+                for (i = 0; i < (x.length-1) ;i++) {
+                    if (i==0)
+                    {
+                        label="Name : ";
+                    }
+                    else if(i==1)
+                    {
+                        label="Mobile : ";
+                    }
+                    else if(i==2)
+                    {
+                        label="Email : ";
+                    }
+                    else if(i==3 && x.elements[3].value!=="")
+                    {
+                        
+                        label="Designation : ";
+                    }
+                    else if(i==4)
+                    {
+                        label="DOB : ";
+                    }
+                    else if(i==5 && x.elements[5].value!=="")
+                    {
+                        label="EmpID : ";
+                    }
+                    else if(i==6 && x.elements[6].value!=="")
+                    {
+                        label="Add : ";
+                    }
+                    else if(i==7 && x.elements[7].value!=="")
+                    {
+                        label="Relation : ";
+                    }
+                    else{
+                        label="";
+                    }
+
+                 text +=label+  x.elements[i].value;
+                 if(x.elements[i].value)
+                 {
+                    text += "<br>";
+                 }
+
+                }
+//document.getElementById("demo").innerHTML = text;
+            if(!text){
+                   alert("Input a text");
+                   text.focus();
+                   return;
+               }
+              
+               var data=text;
+               qrcode.makeCode(data);
+               document.getElementById('SaveLink').classList.remove('hide');
+               document.getElementById('SaveLink').classList.add('show');
+               //var save = document.createElement("a");
+              // var t = document.createTextNode("SaveQR");
+              // save.appendChild(t);
+               
+               //document.getElementById("qrcode").innerHTML = save;
+               //var element = document.getElementById("SaveLink");
+                //element.appendChild(save);
+           }
+     </script> 
+
+    
+
+
+</html>
